@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, computed } from 'vue'
 import VisitPopover from './VisitPopover.vue'
 
 const svgContainer = ref<HTMLElement | null>(null)
@@ -81,6 +81,7 @@ onMounted(async () => {
 
       el.style.fill = levelColors[0]
       el.style.cursor = 'pointer'
+      el.classList.add('admin-zone')
 
       el.addEventListener('click', onRegionClick)
   
@@ -104,7 +105,27 @@ onMounted(async () => {
       svg.setAttribute('viewBox', `0 0 ${bbox.width} ${(bbox.height) * padding_rate}`)
     }
   }
+
+
+  document.addEventListener('click', handleClickOutside)
+
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
+
+async function handleClickOutside(e) {
+  const popoverEl = document.querySelector('.popover')
+  const isAdminZone = e.target.closest('.admin-zone')
+  if (
+    popoverEl &&
+    !popoverEl.contains(e.target) && // click is not inside popover
+    !isAdminZone   // click is not on map
+  ) {
+    showPopover.value = false
+  }
+}
 
 function updateVisitLevel(newLevel) {
   if (selectedRegion.value) {
