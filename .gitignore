@@ -22,3 +22,33 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node modules
+node_modules/
+
+# Production build
+dist/
+
+# Local env files
+.env*
+!.env.example
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Yarn v4+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# Yarn PnP
+.pnp.*
+.yarnrc.yml
+
+# Editor directories and files
+.vscode/
+.idea/
+*.log
