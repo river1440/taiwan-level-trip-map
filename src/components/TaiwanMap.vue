@@ -18,6 +18,7 @@
     >
       <VisitPopover
         :selected="selectedLevel"
+        :region="selectedRegion"
         @update:selected="updateVisitLevel"
       />
     </div>
@@ -31,6 +32,7 @@ import MapLegend from './MapLegend.vue'
 
 
 const svgContainer = ref<HTMLElement | null>(null)
+const selectedId = ref(null)
 const selectedRegion = ref(null)
 const levels = [
   { level: 0, label: '未踏' },
@@ -56,7 +58,10 @@ const totalScore = computed(() => {
 
 function onRegionClick(e) {
   const target = e.target
-  selectedRegion.value = target.id
+
+  selectedId.value = target.id
+
+  selectedRegion.value = visitData[target.id].title
   selectedLevel.value = visitData[target.id].level
 
   popoverPos.value = {
@@ -134,12 +139,12 @@ async function handleClickOutside(e) {
 }
 
 function updateVisitLevel(newLevel) {
-  if (selectedRegion.value) {
-    visitData[selectedRegion.value].level = newLevel
+  if (selectedId.value) {
+    visitData[selectedId.value].level = newLevel
     selectedLevel.value = newLevel
 
     // update the SVG fill color
-    const regionEl = svgContainer.value.querySelector(`#${selectedRegion.value}`)
+    const regionEl = svgContainer.value.querySelector(`#${selectedId.value}`)
     if (regionEl) {
       regionEl.style.fill = levelColors[newLevel.level]
     }

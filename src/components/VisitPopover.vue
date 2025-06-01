@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 font-semibold">
-    Test
+    {{ region }}
   </div>
   <Listbox
     v-model="innerSelected"
@@ -17,6 +17,7 @@ import Listbox from 'primevue/listbox'
 
 const props = defineProps({
   selected: Object,
+  region: String,
 })
 
 const emit = defineEmits(['update:selected'])
