@@ -1,29 +1,36 @@
 <template>
-  <div class="flex justify-start align-top" >
-    <div ref="svgContainer" class="w-full h-[70vh] overflow-visible"></div>
-  </div>
-  <div
-    v-if="showPopover"
-    class="popover"
-    :style="{ top: `${popoverPos.y}px`, left: `${popoverPos.x}px` }"
-  >
-    <VisitPopover
-      :selected="selectedLevel"
-      @update:selected="updateVisitLevel"
-    />
+  <div class="flex flex-col items-center px-4">
+    <div class="my-4 p-4 bg-amber-300 rounded-2xl w-1/6 text-center">
+      <h2 class="text-2xl font-bold">{{ totalScore }} 點</h2>
     </div>
-
-    <!-- <div class="mt-4 p-4 bg-white shadow rounded">
-      <h2 class="text-lg font-bold">總分：{{ totalScore }}</h2>
-    </div> -->
+    <div class="flex justify-between w-full max-w-[1024px] gap-6">
+      <div class="w-1/3 ml-4 mt-4">
+        <MapLegend />
+      </div>
+      <div class="flex-1">
+        <div ref="svgContainer" class="h-[60vh]"></div>
+      </div>
+    </div>
+    <div
+      v-if="showPopover"
+      class="popover"
+      :style="{ top: `${popoverPos.y}px`, left: `${popoverPos.x}px` }"
+    >
+      <VisitPopover
+        :selected="selectedLevel"
+        @update:selected="updateVisitLevel"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onBeforeUnmount, computed } from 'vue'
 import VisitPopover from './VisitPopover.vue'
+import MapLegend from './MapLegend.vue'
+
 
 const svgContainer = ref<HTMLElement | null>(null)
-const op = ref(null)
 const selectedRegion = ref(null)
 const levels = [
   { level: 0, label: '未踏' },
@@ -41,10 +48,10 @@ const showPopover = ref(false)
 const popoverPos = ref({ x: 0, y: 0 })
 
 const visitData = reactive({})
-const levelColors = ['#ffffff', '#3b82f6', '#22c55e', '#facc15', '#ef4444', '#ec4899']
+const levelColors = ['#FEF4E8', '#8FC9EC', '#92D7B3', '#FED264', '#FF9B75', '#F7B9C5']
 
 const totalScore = computed(() => {
-  return Object.values(visitData).reduce((sum, item) => sum + item.level, 0)
+  return Object.values(visitData).reduce((sum, item) => sum + item.level.level, 0)
 })
 
 function onRegionClick(e) {
@@ -77,9 +84,10 @@ onMounted(async () => {
     paths.forEach((el) => {
       const id = el.id
       const title = el.querySelector('title')?.textContent || '未知'
-      visitData[id] = { title, level: levels[0] }
+      const randomLevel = Math.floor(Math.random() * 6)
+      visitData[id] = { title, level: levels[randomLevel] }
 
-      el.style.fill = levelColors[0]
+      el.style.fill = levelColors[randomLevel]
       el.style.cursor = 'pointer'
       el.classList.add('admin-zone')
 
@@ -106,9 +114,7 @@ onMounted(async () => {
     }
   }
 
-
   document.addEventListener('click', handleClickOutside)
-
 })
 
 onBeforeUnmount(() => {
@@ -131,8 +137,12 @@ function updateVisitLevel(newLevel) {
   if (selectedRegion.value) {
     visitData[selectedRegion.value].level = newLevel
     selectedLevel.value = newLevel
-    // update SVG fill color here if needed, or trigger reactive update
-    // e.g. updateRegionColor(selectedRegion.value, newLevel)
+
+    // update the SVG fill color
+    const regionEl = svgContainer.value.querySelector(`#${selectedRegion.value}`)
+    if (regionEl) {
+      regionEl.style.fill = levelColors[newLevel.level]
+    }
   }
 }
 </script>

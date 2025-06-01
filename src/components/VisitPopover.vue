@@ -1,48 +1,18 @@
-<!-- <template>
-  <Listbox v-model="selectedLevel" :options="levels" optionLabel="label" class="w-full md:w-56" />
-</template>
-
-<script setup>
-import { ref, defineProps } from 'vue';
-import Listbox from 'primevue/listbox';
-
-const props = defineProps({
-  selected: Number,
-})
-
-const emit = defineEmits(['update:selected'])
-
-
-const levelColors = [
-  'bg-white border',
-  'bg-blue-500',
-  'bg-green-500',
-  'bg-yellow-400',
-  'bg-red-500',
-  'bg-pink-400'
-]
-
-const levels = ref([
-    { level: 0, label: '未踏' },
-    { level: 1, label: '通過' },
-    { level: 2, label: '接地' },
-    { level: 3, label: '訪問' },
-    { level: 4, label: '宿泊' },
-    { level: 5, label: '居住' }
-]);
-</script> -->
-
 <template>
+  <div class="p-2 font-semibold">
+    Test
+  </div>
   <Listbox
     v-model="innerSelected"
     :options="levels"
     optionLabel="label"
     class="w-full md:w-56"
+    checkmark
   />
 </template>
 
 <script setup>
-import { ref, watch, defineEmits, defineProps } from 'vue'
+import { ref, watch } from 'vue'
 import Listbox from 'primevue/listbox'
 
 const props = defineProps({
@@ -76,3 +46,36 @@ watch(innerSelected, (newVal) => {
   emit('update:selected', newVal)
 })
 </script>
+<!-- <template>
+  <Listbox v-model="selectedLevel" :options="levels" optionLabel="label" class="w-full md:w-56" />
+</template>
+
+<script setup>
+import { ref, defineProps } from 'vue';
+import Listbox from 'primevue/listbox';
+
+const props = defineProps({
+  selected: Number,
+})
+
+const emit = defineEmits(['update:selected'])
+
+
+const levelColors = [
+  'bg-white border',
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-yellow-400',
+  'bg-red-500',
+  'bg-pink-400'
+]
+
+const levels = ref([
+    { level: 0, label: '未踏' },
+    { level: 1, label: '通過' },
+    { level: 2, label: '接地' },
+    { level: 3, label: '訪問' },
+    { level: 4, label: '宿泊' },
+    { level: 5, label: '居住' }
+]);
+</script> -->

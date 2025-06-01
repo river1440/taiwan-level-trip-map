@@ -1,10 +1,14 @@
 <script setup>
 import TaiwanMap from './components/TaiwanMap.vue'
+import BaseFooter from './components/BaseFooter.vue'
 </script>
 
 <template>
-  <main class="p-4">
-    <h1 class="text-3xl font-bold text-center mb-4">Taiwan Travel Map</h1>
-    <TaiwanMap />
-  </main>
+  <div class="min-h-screen flex flex-col">
+    <main class="p-4 flex-grow">
+      <h1 class="text-3xl font-bold text-center mb-4">TAIWAN LEVEL UP ✨</h1>
+      <TaiwanMap />
+    </main>
+    <BaseFooter />
+  </div>
 </template>
