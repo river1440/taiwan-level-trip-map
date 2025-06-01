@@ -1,14 +1,7 @@
 <template>
-  <div class="relative">
-    <!-- <div ref="svgContainer" class="w-24 h-24"></div> -->
-  <svg
-    ref="svgContainer"
-    viewBox="0 0 800 1000"
-    preserveAspectRatio="xMidYMid meet"
-    class="w-full h-full"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-  </svg>
+  <div class="flex justify-start align-top" >
+    <div ref="svgContainer" class="w-full h-[70vh] overflow-visible"></div>
+  </div>
   <div
     v-if="showPopover"
     class="popover"
@@ -20,10 +13,9 @@
     />
     </div>
 
-    <div class="mt-4 p-4 bg-white shadow rounded">
+    <!-- <div class="mt-4 p-4 bg-white shadow rounded">
       <h2 class="text-lg font-bold">總分：{{ totalScore }}</h2>
-    </div>
-  </div>
+    </div> -->
 </template>
 
 <script setup lang="ts">
@@ -93,6 +85,24 @@ onMounted(async () => {
       el.addEventListener('click', onRegionClick)
   
     })
+  }
+
+  // Adjust the size
+  const svg = svgContainer.value.querySelector('svg')
+  if (svg) {
+    svg.removeAttribute('width')
+    svg.removeAttribute('height')
+    svg.setAttribute('width', '100%')
+    svg.setAttribute('height', '100%')
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
+
+    const padding_rate = 1.04
+    
+    // Optional: ensure it has viewBox to scale properly
+    if (!svg.hasAttribute('viewBox')) {
+      const bbox = svg.getBBox()
+      svg.setAttribute('viewBox', `0 0 ${bbox.width} ${(bbox.height) * padding_rate}`)
+    }
   }
 })
 

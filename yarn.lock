@@ -727,6 +727,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/vite@npm:^4.1.8":
+  version: 4.1.8
+  resolution: "@tailwindcss/vite@npm:4.1.8"
+  dependencies:
+    "@tailwindcss/node": "npm:4.1.8"
+    "@tailwindcss/oxide": "npm:4.1.8"
+    tailwindcss: "npm:4.1.8"
+  peerDependencies:
+    vite: ^5.2.0 || ^6
+  checksum: 10c0/334384b196aebb91d9e2dae0a3959f404fdb570bb590c69786b0bdd27d7bfded37c0ad439fccb8c16f3180232820eeeb1dd05d97006e22dabdc2f9a35111e84b
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tybys/wasm-util@npm:0.9.0"
@@ -2023,6 +2036,7 @@ __metadata:
     "@primeuix/styles": "npm:^1.1.1"
     "@primeuix/themes": "npm:^1.1.1"
     "@tailwindcss/postcss": "npm:^4.1.8"
+    "@tailwindcss/vite": "npm:^4.1.8"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     autoprefixer: "npm:^10.4.21"
     postcss: "npm:^8.5.4"
