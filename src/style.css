@@ -1,6 +1,7 @@
 @import "tailwindcss";
+
 :root {
-  font-family: system-ui, Helvetica, Arial, sans-serif;
+  font-family: jf-openhuninn, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
 }
 /* 
